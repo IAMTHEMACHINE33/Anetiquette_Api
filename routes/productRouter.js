@@ -1,6 +1,6 @@
 const express = require("express");
 const router = new express.Router();
-const Product = require("../model/productModel");
+const Product = require("../models/productModel");
 
 router.post("/product/add",(req,res)=>{
     const price = req.body.price;
