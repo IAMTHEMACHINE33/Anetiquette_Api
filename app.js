@@ -7,7 +7,7 @@ app.use(cors());
 require("./config/database");
 
 // Route Imports
-const productRouter = require("./router/productRouter");
+const productRouter = require("./routes/productRouter");
 app.use(productRouter);
 
 const user = require("./routes/userRoute")
