@@ -8,11 +8,13 @@ router.post("/product/add",upload.single("product_img"),(req,res)=>{
     const price = req.body.price;
     const description = req.body.description;
     const image = req.file.filename;
+    const category = req.body.category;
 
     const data = new Product({
         price: price,
         description: description,
-        image: image
+        image: image,
+        category: category,
     })
     data.save()
     .then(()=>{
