@@ -7,11 +7,7 @@ const sendToken = require("../utils/jwtToken");
 exports.registerUser = catchAsyncErrors( async(req, res, next)=>{
     const{name, email, password} = req.body;
     const user = await User.create({
-        name, email, password,
-        avatar:{
-            public_id:"temporary id",
-            url: "profilepicUrl"
-        }
+        name, email, password
     })
 
     const token = user.getJWTToken();
@@ -43,3 +39,19 @@ exports.loginUser = catchAsyncErrors(async(req, res, next)=>{
 
     sendToken(user, 200, res)
 })
+
+
+//Logout User
+exports.logout = catchAsyncErrors(async(req, res, next)=>{
+    
+    res.cookie("token", null, {
+        expires: new Date(Date.now()),
+        httpOnly: true,
+    })
+
+    res.status(200).json({
+        success: true,
+        message: "Logged Out"
+    })
+})
+
