@@ -2,11 +2,14 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const cookieParser = require("cookie-parser")
+const bodyParser = require("body-parser");
 
 app.use(express.json()); 
 app.use(cors());
+
 app.use(cookieParser());
 require("./config/database");
+app.use(bodyParser.urlencoded({ extended: true}))
 
 // Route Imports
 const productRouter = require("./routes/productRouter");

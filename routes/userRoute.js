@@ -1,8 +1,11 @@
 const express = require("express");
 const { registerUser, loginUser, logout } = require("../controllers/userController");
+const multer = require("multer")
 const router = express.Router();
 
-router.route("/register").post(registerUser)
+const upload = multer();
+
+router.route("/register").post(upload.none(), registerUser)
 
 router.route("/login").post(loginUser)
 
