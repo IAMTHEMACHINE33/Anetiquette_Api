@@ -10,6 +10,7 @@ router.post("/product/add",upload.single("product_img"),(req,res)=>{
     const description = req.body.description;
     const image = req.file.filename;
     const category = req.body.category;
+    //asdasd
 
     const data = new Product({
         product_name: product_name,
