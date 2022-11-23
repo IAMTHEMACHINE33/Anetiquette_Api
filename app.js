@@ -23,6 +23,9 @@ app.use(categoryRouter);
 const user = require("./routes/userRoute")
 app.use("/api/v1", user)
 
+const adminRouter = require("./routes/adminRouter")
+app.use("/api/v1",adminRouter);
+
 //Middleware for Errors
 const errorMiddleware = require("./middleware/error");
 app.use(errorMiddleware);

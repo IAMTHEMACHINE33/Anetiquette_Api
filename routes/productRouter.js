@@ -3,13 +3,16 @@ const router = new express.Router();
 const Product = require("../models/productModel");
 const multer = require("multer");
 const upload = require("../fileupload/fileupload");
+const { isAuthenticatedUser, authorizeRoles } = require("../middleware/auth");
 
-router.post("/product/add",upload.single("product_img"),(req,res)=>{
+router.post("/product/add", isAuthenticatedUser, upload.single("product_img"),(req,res)=>{
+
     const product_name = req.body.product_name;
     const price = req.body.price;
     const description = req.body.description;
     const image = req.file.filename;
     const category = req.body.category;
+    //asdasd
 
     const data = new Product({
         product_name: product_name,
