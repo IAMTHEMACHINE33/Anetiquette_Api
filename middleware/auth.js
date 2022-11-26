@@ -29,25 +29,25 @@ exports.isAuthenticatedUser = catchAsyncErrors( async(req, res, next)=>{
 
 })
 
-module.exports.userGuard=(req,res,next)=>{
-    try{
-        const token = req.headers.authorization.split(" ")[1];
-        const data = jwt.verify(token, "token");
-        console.log(data);
-        User.findOne({_id:data.userId})
-        .then((udata)=>{
-            req.userInfo = udata;
-            next();
-        })
-        .catch((e)=>{
-            res.json({message: "invalid token"})
-        })
-    }
-    catch(e){
+// module.exports.userGuard=(req,res,next)=>{
+//     try{
+//         const token = req.headers.authorization.split(" ")[1];
+//         const data = jwt.verify(token, "token");
+//         console.log(data);
+//         User.findOne({_id:data.userId})
+//         .then((udata)=>{
+//             req.userInfo = udata;
+//             next();
+//         })
+//         .catch((e)=>{
+//             res.json({message: "invalid token"})
+//         })
+//     }
+//     catch(e){
         
-        res.json({message:"Invalid token"})
-    }
-} 
+//         res.json({message:"Invalid token"})
+//     }
+// } 
 
 exports.authorizeRoles = (...roles) =>{
     return (req, res, next)=>{
