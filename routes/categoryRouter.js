@@ -4,7 +4,7 @@ const Category = require("../models/categoryModel");
 const multer = require("multer");
 const upload = require("../fileupload/fileupload");
 
-router.post("/category/add",upload.single("category_img"),(req,res)=>{
+router.post("/category/add", upload.single("category_img"),(req,res)=>{
     const name = req.body.name;
     const image = req.file.filename;
 
