@@ -6,7 +6,7 @@ const upload = require("../fileupload/fileupload");
 const { isAuthenticatedUser, authorizeRoles } = require("../middleware/auth");
 
 
-router.post("/category/add",isAuthenticatedUser, upload.single("category_img"),(req,res)=>{
+router.post("/category/add", upload.single("category_img"),(req,res)=>{
     const name = req.body.name;
     const image = req.file.filename;
 
@@ -18,12 +18,10 @@ router.post("/category/add",isAuthenticatedUser, upload.single("category_img"),(
     data.save()
     .then(()=>{
         res
-        .status(202)
         .json({msg:"Category Added"})
 
     }).catch((e)=>{
         res
-        .status(402)
         .json({e})
     })
 })

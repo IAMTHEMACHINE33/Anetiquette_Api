@@ -15,7 +15,9 @@ router.get("/show",auth.isAuthenticatedUser,(req,res)=>{
     const _id = req.user.id;
     User.findOne({_id:_id})
     .then((data)=>{
-        res.json({data:data})
+        res
+        .json({data:data})
+        .status(200)
     }).catch((e)=>{
         res.json({error:e})
     })
