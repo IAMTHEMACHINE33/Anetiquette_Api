@@ -2,9 +2,11 @@ const request = require("supertest")
 const expect = require("chai").expect
 const register = require('../testdata/register.json')
 const login = require('../testdata/login.json')
+const update = require('../testdata/updateuser.json')
 
-describe("Register TDD test", ()=>{
+describe("Anetiquette TDD test", ()=>{
     const baseurl = "http://localhost:4000/api/v1"
+    const baseurl2 = "http://localhost:4000/"
     var userId
     var token
     it('should log the user with given credentials in', (done)=>{
@@ -50,6 +52,40 @@ describe("Register TDD test", ()=>{
             .set('Authorization', 'Bearer ' + token)
             .end(function(err, res){
                 expect(res.statusCode).to.be.equal(200)
+                if(err){
+                    throw err
+                }
+                done()
+            })
+    })
+    it('should update the user credentials', (done)=>{
+        request(baseurl)
+            .put('/update')
+            .send(update)
+            .set('Accept', 'application/json')
+            .set('Content-Type', 'application/json')
+            .set('Authorization', 'Bearer ' + token)
+            .end(function(err, res){
+                expect(res.statusCode).to.be.equal(200)
+                // expect(res.body.user.name).to.be.equal(update.name) 
+                // expect(res.body.user.email).to.be.equal(update.email)
+                if(err){
+                    throw err
+                }
+                done()
+            })
+    })
+    it('should add product items', (done)=>{
+        request(baseurl2)
+            .put('/product/add')
+            .send(update)
+            .set('Accept', 'application/json')
+            .set('Content-Type', 'application/json')
+            .set('Authorization', 'Bearer ' + token)
+            .end(function(err, res){
+                expect(res.statusCode).to.be.equal(200)
+                // expect(res.body.user.name).to.be.equal(update.name) 
+                // expect(res.body.user.email).to.be.equal(update.email)
                 if(err){
                     throw err
                 }

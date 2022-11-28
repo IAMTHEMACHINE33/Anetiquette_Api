@@ -33,7 +33,9 @@ router.put("/update",auth.isAuthenticatedUser,(req,res)=>{
             email:email
         })
         .then(()=>{
-            res.json({message:"Updated",success:true})
+            res
+            .json({message:"Updated",success:true})
+            .status(200)
         })
         .catch((e)=>{
             res.json({message:"something wrong"})
