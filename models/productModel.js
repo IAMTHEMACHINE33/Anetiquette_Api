@@ -7,6 +7,10 @@ const product = new mongoose.Schema({
     product_name:{
         type: String
     },
+    bought_by:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+    },
     date:{
         type: Date,
         default: Date.now    

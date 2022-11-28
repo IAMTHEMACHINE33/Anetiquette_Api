@@ -34,13 +34,37 @@ router.post("/product/add", isAuthenticatedUser, upload.single("product_img"),(r
 })
 
 router.get("/product/show",(req,res)=>{
-    Product.find().populate('category')
+    Product.find().populate('category','bought_by')
     .then((data)=>{
         res.status(203)
         .json({success:true,data:data})
     }).catch((e)=>{
         res.status(403)
         .json({error:e})
+    })
+})
+
+router.get("/product/single/:product_id",isAuthenticatedUser,(req,res)=>{
+    Product.findOne({_id:req.params.product_id})
+    .then((data)=>{
+        res.json({data:data})
+    })
+    .catch((e)=>{
+        res.json({error:e})
+    })
+})
+
+router.put("/product/single/:product_id/bought",isAuthenticatedUser,(req, res)=>{
+    const bought_by = req.user.id
+    Product.updateOne({_id:req.params.product_id},
+        {bought_by:bought_by})
+    .then((data)=>{
+        res
+        .json({success:true,msg:"Item Bought"})
+    })
+    .catch((e)=>{
+        res
+        .json({success:false,error:e})
     })
 })
 

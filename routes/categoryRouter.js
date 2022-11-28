@@ -3,8 +3,10 @@ const router = new express.Router();
 const Category = require("../models/categoryModel");
 const multer = require("multer");
 const upload = require("../fileupload/fileupload");
+const { isAuthenticatedUser, authorizeRoles } = require("../middleware/auth");
 
-router.post("/category/add",upload.single("category_img"),(req,res)=>{
+
+router.post("/category/add", upload.single("category_img"),(req,res)=>{
     const name = req.body.name;
     const image = req.file.filename;
 
@@ -12,16 +14,14 @@ router.post("/category/add",upload.single("category_img"),(req,res)=>{
         name: name,
         image: image
 
-    });
+    })
     data.save()
     .then(()=>{
         res
-        .status(202)
         .json({msg:"Category Added"})
 
     }).catch((e)=>{
         res
-        .status(402)
         .json({e})
     })
 })
