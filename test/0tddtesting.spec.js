@@ -3,10 +3,11 @@ const expect = require("chai").expect
 const register = require('../testdata/register.json')
 const login = require('../testdata/login.json')
 const update = require('../testdata/updateuser.json')
+const productadd = require('../testdata/productadd.json')
 
 describe("Anetiquette TDD test", ()=>{
     const baseurl = "http://localhost:4000/api/v1"
-    const baseurl2 = "http://localhost:4000/"
+    const baseurl2 = "http://localhost:4000"
     var userId
     var token
     it('should log the user with given credentials in', (done)=>{
@@ -77,15 +78,13 @@ describe("Anetiquette TDD test", ()=>{
     })
     it('should add product items', (done)=>{
         request(baseurl2)
-            .put('/product/add')
-            .send(update)
+            .post('/product/add')
+            .send(productadd)
             .set('Accept', 'application/json')
             .set('Content-Type', 'application/json')
             .set('Authorization', 'Bearer ' + token)
             .end(function(err, res){
-                expect(res.statusCode).to.be.equal(200)
-                // expect(res.body.user.name).to.be.equal(update.name) 
-                // expect(res.body.user.email).to.be.equal(update.email)
+                expect(res.statusCode).to.be.equal(201)
                 if(err){
                     throw err
                 }
