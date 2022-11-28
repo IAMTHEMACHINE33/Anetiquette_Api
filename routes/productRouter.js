@@ -59,11 +59,11 @@ router.put("/product/single/:product_id/bought",isAuthenticatedUser,(req, res)=>
     Product.updateOne({_id:req.params.product_id},
         {bought_by:bought_by})
     .then((data)=>{
-        res.status(205)
+        res
         .json({success:true,msg:"Item Bought"})
     })
     .catch((e)=>{
-        res.status(405)
+        res
         .json({success:false,error:e})
     })
 })

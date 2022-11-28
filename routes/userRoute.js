@@ -4,6 +4,7 @@ const multer = require("multer")
 const router = express.Router();
 const User = require("../models/userModel");
 const upload = multer();
+const bcrypt = require("bcryptjs");
 const auth = require("../middleware/auth");
 const { default: isEmail } = require("validator/lib/isemail");
 
@@ -26,20 +27,21 @@ router.get("/show",auth.isAuthenticatedUser,(req,res)=>{
 router.put("/update",auth.isAuthenticatedUser,(req,res)=>{
     const _id = req.user.id;
     const{name, email, password} = req.body;
-    User.updateOne({_id:_id},
-        {
-            name: name,
-            password:password,
-            email:email
-        })
-        .then(()=>{
-            res
-            .json({message:"Updated",success:true})
-            .status(200)
-        })
-        .catch((e)=>{
-            res.json({message:"something wrong"})
-        })
+    bcrypt.hash(password, 10, (e, hashed_pw)=>{
+        User.updateOne({_id:_id},
+            {
+                name: name,
+                password:hashed_pw,
+                email:email
+            })
+            .then(()=>{
+                res.json({message:"Updated",success:true})
+            })
+            .catch((e)=>{
+                res.json({message:e,success:false})
+            })
+    })
+   
 })
 
 router.route("/logout").get(logout)
