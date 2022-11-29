@@ -13,6 +13,7 @@ router.post("/product/add", isAuthenticatedUser, upload.single("product_img"),(r
     const image = req.file.filename;
     const category = req.body.category;
     //asdasd
+    console.log(product_name);
 
     const data = new Product({
         product_name: product_name,
@@ -22,13 +23,11 @@ router.post("/product/add", isAuthenticatedUser, upload.single("product_img"),(r
         category: category,
     })
     data.save()
-    .then(()=>{
+    .then(()=>{ 
         res
-        .status(201)
         .json({msg:"Product Added"})
     }).catch((e)=>{
         res
-        .status(401)
         .json(e)
     })
 })
