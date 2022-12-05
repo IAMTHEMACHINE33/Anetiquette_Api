@@ -46,7 +46,12 @@ router.get("/product/show",(req,res)=>{
 })
 
 router.get("/product/single/:product_id",isAuthenticatedUser,(req,res)=>{
-    Product.findOne({_id:req.params.product_id})
+    Product.findOne({_id:req.params.product_id}).populate({
+        path: "bid_info", // populate blogs
+        populate: {
+           path: "bid_by" // in blogs, populate comments
+        }
+     })
     .then((data)=>{
         res.json({data:data})
     })
@@ -57,6 +62,7 @@ router.get("/product/single/:product_id",isAuthenticatedUser,(req,res)=>{
 
 router.put("/product/single/:product_id/bought",isAuthenticatedUser,(req, res)=>{
     const bought_by = req.user.id
+    console.log(req.params.product_id)
     Product.updateOne({_id:req.params.product_id},
         {bought_by:bought_by})
     .then((data)=>{
@@ -68,6 +74,32 @@ router.put("/product/single/:product_id/bought",isAuthenticatedUser,(req, res)=>
         .json({success:false,error:e})
     })
 })
+
+router.get("/product/purchase_history",isAuthenticatedUser,(req,res)=>{
+    const _id = req.user.id;
+
+    Product.find({bought_by:_id})
+    .then((data)=>{
+        res.json({success:true,data:data})
+    })
+    .catch((e)=>{
+        res.json({success:false,error:e})
+    })
+})
+
+router.post("/product/search",(req,res)=>{
+    const search = req.body.search;
+
+    Product.find({product_name:search})
+    .then((data)=>{
+        res.json({success:true,data:data})
+    })
+    .catch((e)=>{
+        res.json({success:false,error:e})
+    })
+})
+
+
 
 router.post("/product/single/:product_id/bid",isAuthenticatedUser,async (req,res)=>{
     const bid_by = req.user.id
