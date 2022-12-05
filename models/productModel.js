@@ -7,10 +7,22 @@ const product = new mongoose.Schema({
     product_name:{
         type: String
     },
+    type:{
+        type: String
+    },
+    dead_time:{
+        type: Date
+    },
     bought_by:{
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
     },
+    bid_info:[{
+        bid_by:{
+            type:mongoose.Schema.Types.ObjectId,
+            ref: "User"},
+        bid_price:{type: Number}
+    }],
     date:{
         type: Date,
         default: Date.now    

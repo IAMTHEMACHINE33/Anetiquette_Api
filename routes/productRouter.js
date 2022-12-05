@@ -12,6 +12,7 @@ router.post("/product/add", isAuthenticatedUser, upload.single("product_img"),(r
     const description = req.body.description;
     const image = req.file.filename;
     const category = req.body.category;
+    const type = req.body.type;
     //asdasd
     console.log(product_name);
 
@@ -21,6 +22,7 @@ router.post("/product/add", isAuthenticatedUser, upload.single("product_img"),(r
         description: description,
         image: image,
         category: category,
+        type: type
     })
     data.save()
     .then(()=>{ 
@@ -65,6 +67,69 @@ router.put("/product/single/:product_id/bought",isAuthenticatedUser,(req, res)=>
         res
         .json({success:false,error:e})
     })
+})
+
+router.post("/product/single/:product_id/bid",isAuthenticatedUser,async (req,res)=>{
+    const bid_by = req.user.id
+    const bid_price = req.body.bid_price
+    // const a=Product.findOne({_id:req.params.product_id},function old_info(err, data) {
+    //     // console.log(temp);
+    //     const old_price = data.bid_info[0].bid_price
+    //     return old_price;
+    //     // console.log(old_price)  
+    //   })
+    let b;
+      try {
+        b =  await Product.findOne({_id:req.params.product_id});
+      } catch(err) {
+        console.log(err);
+      }
+    
+    
+    console.log(b.bid_info.length)
+    let old_price= b.price;
+    for(let i = 0; i < b.bid_info.length; i++){
+        let loop_price = b.bid_info[i].bid_price;
+        if(old_price < loop_price){
+            old_price = loop_price;
+        }
+    }
+    // if(n <= b.bid_info.length){
+    //     let loop_price = b.bid_info[n].bid_price;
+    //     console.log("loop_price"+loop_price)
+    //     n= n+1;
+    //     console.log(loop_price)
+    //     if(loop_price>old_price){
+    //         old_price = loop_price;
+    //         console.log(old_price)
+    //     }
+        
+    // }
+    // let old_price = b.bid_info[0].bid_price;
+    
+    // if (b.bid_info == null){
+    //     old_price = 
+    //     console.log(old_price)
+    // } 
+    // console.log(old_price);
+    // console.log("bid_price"+bid_price)
+    // console.log("old_price"+old_price)
+    if(bid_price > old_price){
+            Product.findOneAndUpdate({_id:req.params.product_id},
+                {$addToSet:{bid_info:[
+                    {bid_by:bid_by,
+                    bid_price:bid_price}]
+                }})
+            .then((data)=>{
+                res.json({success:true,msg:"added"})  
+            })
+            .catch((e)=>{
+                res.json({success:false,msg:e})
+            })
+                
+    }else{
+        res.json({success:false,msg:"Price is lower or equal than before"})
+    }
 })
 
 module.exports = router;
