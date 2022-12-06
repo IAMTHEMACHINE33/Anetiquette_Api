@@ -50,7 +50,7 @@ router.get("/product/single/:product_id",isAuthenticatedUser,(req,res)=>{
         path: "bid_info", 
         populate: {
            path: "bid_by" 
-        }
+        }//asd
      })
     .then((data)=>{
         res.json({data:data})
