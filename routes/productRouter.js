@@ -48,7 +48,7 @@ router.get("/product/single/:product_id",isAuthenticatedUser,(req,res)=>{
     Product.findOne({_id:req.params.product_id})
     .then((data)=>{
         res.json({data:data})
-    })
+    })//asd
     .catch((e)=>{
         res.json({error:e})
     })
