@@ -47,9 +47,9 @@ router.get("/product/show",(req,res)=>{
 
 router.get("/product/single/:product_id",isAuthenticatedUser,(req,res)=>{
     Product.findOne({_id:req.params.product_id}).populate({
-        path: "bid_info", // populate blogs
+        path: "bid_info", 
         populate: {
-           path: "bid_by" // in blogs, populate comments
+           path: "bid_by" 
         }
      })
     .then((data)=>{
