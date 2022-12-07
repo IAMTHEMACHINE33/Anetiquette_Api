@@ -10,7 +10,7 @@ describe("Anetiquette TDD test", ()=>{
     const baseurl2 = "http://localhost:4000"
     var userId
     var token
-    it('should log the user with given credentials in', (done)=>{
+    it('should register the user and add their credentials to database', (done)=>{
         request(baseurl)
             .post('/register')
             .send(register)

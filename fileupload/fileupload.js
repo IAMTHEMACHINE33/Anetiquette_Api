@@ -9,7 +9,7 @@ const storage = multer.diskStorage({
     }
 })
 const filter = (req,file,cb)=>{
-    if(file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "multipart/mixed"){
+    if(file.mimetype == "image/png" || file.mimetype == "image/jpeg" || file.mimetype == "multipart/mixed"){
         cb(null,true)
     }
 }
