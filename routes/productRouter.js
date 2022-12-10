@@ -53,7 +53,9 @@ router.get("/product/single/:product_id",isAuthenticatedUser,(req,res)=>{
         }//asd
      })
     .then((data)=>{
-        res.json({data:data})
+        res
+            .json({data:data})
+            .status(200)
     })//asd
     .catch((e)=>{
         res.json({error:e})
@@ -81,6 +83,7 @@ router.get("/product/purchase_history",isAuthenticatedUser,(req,res)=>{
     Product.find({bought_by:_id})
     .then((data)=>{
         res.json({success:true,data:data})
+            .status(200)
     })
     .catch((e)=>{
         res.json({success:false,error:e})
@@ -93,6 +96,7 @@ router.post("/product/search",(req,res)=>{
     Product.find({product_name:search})
     .then((data)=>{
         res.json({success:true,data:data})
+            .status(200)
     })
     .catch((e)=>{
         res.json({success:false,error:e})
@@ -153,7 +157,8 @@ router.post("/product/single/:product_id/bid",isAuthenticatedUser,async (req,res
                     bid_price:bid_price}]
                 }})
             .then((data)=>{
-                res.json({success:true,msg:"added"})  
+                res.json({success:true,msg:"added"})
+                    .status(200)
             })
             .catch((e)=>{
                 res.json({success:false,msg:e})
