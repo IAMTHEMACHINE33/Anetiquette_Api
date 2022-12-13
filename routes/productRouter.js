@@ -137,6 +137,7 @@ router.post("/product/single/:product_id/bid",isAuthenticatedUser,async (req,res
     // setTimeout(function() {
     //     console.log(diff);
     // }, diff);
+    //asd
     console.log("before")
     console.log(last_time.toString()+" last")
     console.log(now_time.toString()+" now")
