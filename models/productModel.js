@@ -23,9 +23,12 @@ const product = new mongoose.Schema({
             ref: "User"},
         bid_price:{type: Number}
     }],
-    date:{
+    add_time:{
         type: Date,
         default: Date.now    
+    },
+    last_time:{
+        type: Date,
     },
     description:{
         type: String,
