@@ -38,7 +38,7 @@ router.post("/product/add", isAuthenticatedUser, upload.single("product_img"),(r
 })
 
 router.get("/product/show",(req,res)=>{
-    Product.find().populate('category','bought_by')
+    Product.find().populate('category').populate('bought_by')
     .then((data)=>{
         res.status(203)
         .json({success:true,data:data})

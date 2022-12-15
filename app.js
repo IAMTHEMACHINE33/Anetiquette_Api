@@ -20,6 +20,9 @@ app.use(productRouter);
 const categoryRouter = require("./routes/categoryRouter");
 app.use(categoryRouter);
 
+const cartRouter = require("./routes/cartRouter");
+app.use(cartRouter);
+
 const user = require("./routes/userRoute")
 app.use("/api/v1", user)
 
