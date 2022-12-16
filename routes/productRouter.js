@@ -1,6 +1,7 @@
 const express = require("express");
 const router = new express.Router();
 const Product = require("../models/productModel");
+const Cart = require("../models/cartModel");
 const multer = require("multer");
 const upload = require("../fileupload/fileupload");
 const { isAuthenticatedUser, authorizeRoles } = require("../middleware/auth");
@@ -145,10 +146,19 @@ router.post("/product/single/:product_id/bid",isAuthenticatedUser,async (req,res
         console.log("after")
         console.log(last_time.getTime())
         console.log(now_time.getTime())
-        Product.findOneAndUpdate({_id:req.params.product_id},{
-            price: old_price,
-            bought_by: owner
-        })
+        Cart.findOneAndUpdate({user_name:owner},
+            {
+                $addToSet:{
+                    products:[
+                    {
+                        added_product:added_product
+                    }
+                ]}
+            })
+        // Product.findOneAndUpdate({_id:req.params.product_id},{
+        //     price: old_price,
+        //     bought_by: owner
+        // })
         .then(()=>{
             res.json({success:true, msg:"Bidding Over"})
         })

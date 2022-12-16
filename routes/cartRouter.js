@@ -35,7 +35,12 @@ router.post("/cart/add",isAuthenticatedUser,(req,res)=>{
 
 router.get("/cart/show",isAuthenticatedUser,(req,res)=>{
     const user_name = req.user.id;
-    Cart.findOne({user_name:user_name}).populate('user_name')
+    Cart.findOne({user_name:user_name}).populate('user_name').populate({
+        path: "products", 
+        populate: {
+           path: "added_product" 
+        }//asdp
+     })
     .then((data)=>{
         res.json({success:true,data:data})
     })
