@@ -205,4 +205,37 @@ describe("Anetiquette TDD test", ()=>{
             done()
         })
     })
+
+    it('should display items that are added to cart', (done)=>{
+        request(baseurl2)
+        .get('/cart/show')
+        .set('Accept', 'application/json')
+        .set('Content-Type', 'application/json')
+        .set('Authorization', 'Bearer ' + token)
+        .end(function(err, res){
+            expect(res.statusCode).to.be.equal(200)
+            if(err){
+                throw err
+            }
+            done()
+        })
+    })
+
+    it('should be able to remove specified product from the cart ', (done)=>{
+        request(baseurl2)
+        .put('/cart/remove')
+        .send(cartadd)
+        .set('Accept', 'application/json')
+        .set('Content-Type', 'application/json')
+        .set('Authorization', 'Bearer ' + token)
+        .end(function(err, res){
+            expect(res.statusCode).to.be.equal(200)
+            if(err){
+                throw err
+            }
+            done()
+        })
+    })
+    
+    
 })
