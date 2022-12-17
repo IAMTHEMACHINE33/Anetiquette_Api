@@ -161,6 +161,7 @@ router.post("/product/single/:product_id/bid",isAuthenticatedUser,async (req,res
         // })
         .then(()=>{
             res.json({success:true, msg:"Bidding Over"})
+                .status(200)
         })
         .catch((e)=>{
             res.json({success:false, error:e})
@@ -175,6 +176,7 @@ router.post("/product/single/:product_id/bid",isAuthenticatedUser,async (req,res
                 }})
             .then((data)=>{
                 res.json({success:true,msg:"added"})
+                    .status(200)
                     
             })
             .catch((e)=>{

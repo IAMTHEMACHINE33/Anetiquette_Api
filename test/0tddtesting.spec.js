@@ -7,6 +7,7 @@ const productadd = require('../testdata/productadd.json')
 const categoryadd = require('../testdata/categoryadd.json')
 const productsearch = require('../testdata/productsearch.json')
 const productbid = require('../testdata/productbid.json')
+const cartadd = require('../testdata/cartadd.json')
 
 describe("Anetiquette TDD test", ()=>{
     const baseurl = "http://localhost:4000/api/v1"
@@ -173,10 +174,26 @@ describe("Anetiquette TDD test", ()=>{
         })
     })
    
-    it('should bid for an auction item', (done)=>{
+    // it('should bid for an auction item', (done)=>{
+    //     request(baseurl2)
+    //     .post('/product/single/639d9c2bb4cdda29cf3ccf76/bid')
+    //     .send(productbid)
+    //     .set('Accept', 'application/json')
+    //     .set('Content-Type', 'application/json')
+    //     .set('Authorization', 'Bearer ' + token)
+    //     .end(function(err, res){
+    //         expect(res.statusCode).to.be.equal(200)
+    //         if(err){
+    //             throw err
+    //         }
+    //         done()
+    //     })
+    // })
+
+    it('should be able to add product to cart', (done)=>{
         request(baseurl2)
-        .post('/product/single/6390429631d1bd6027a26b06/bid')
-        .send(productbid)
+        .post('/cart/add')
+        .send(cartadd)
         .set('Accept', 'application/json')
         .set('Content-Type', 'application/json')
         .set('Authorization', 'Bearer ' + token)
@@ -188,6 +205,4 @@ describe("Anetiquette TDD test", ()=>{
             done()
         })
     })
-
-    
 })

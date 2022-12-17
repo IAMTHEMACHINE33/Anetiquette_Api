@@ -23,7 +23,9 @@ router.post("/cart/add",isAuthenticatedUser,(req,res)=>{
             ]}
         })
         .then(()=>{
-            res.json({success:true,message:"Added to cart"})
+            res
+            .json({success:true,message:"Added to cart"})
+            .status(201)
         })
         .catch((e)=>{
             res.json({success:false,error:e})
@@ -42,7 +44,10 @@ router.get("/cart/show",isAuthenticatedUser,(req,res)=>{
         }//asdp
      })
     .then((data)=>{
-        res.json({success:true,data:data})
+        res
+        .json({success:true,data:data})
+        .status(200)
+        
     })
     .catch((e)=>{
         res.json({success:false,error:e})
@@ -57,7 +62,9 @@ router.put("/cart/remove",isAuthenticatedUser,(req,res)=>{
             added_product:remove_product
         }]}})
     .then(()=>{
-        res.json({succes:true,message:"removed"})
+        res
+        .json({succes:true,message:"removed"})
+        .status(200)
     })
     .catch((e)=>{
         res.json({success:false,error:e})
