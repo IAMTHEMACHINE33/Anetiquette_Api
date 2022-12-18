@@ -20,7 +20,7 @@ router.post("/feedback/add",isAuthenticatedUser,(req,res)=>{
 })
 
 router.get("/feedback/show",isAuthenticatedUser,(req,res)=>{
-    Feedback.find()
+    Feedback.find().populate("user_name")
     .then((data)=>{
         res.json({success:true,data:data})
     })
