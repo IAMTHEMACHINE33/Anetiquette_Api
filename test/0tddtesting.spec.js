@@ -176,7 +176,7 @@ describe("Anetiquette TDD test", ()=>{
    
     it('should bid for an auction item', (done)=>{
         request(baseurl2)
-        .post('/product/single/639fdd282cfdb7a70a5fa5e9/bid')
+        .post('/product/single/63a04b2ccda0151ffe58c10c/bid')
         .send(productbid)
         .set('Accept', 'application/json')
         .set('Content-Type', 'application/json')
