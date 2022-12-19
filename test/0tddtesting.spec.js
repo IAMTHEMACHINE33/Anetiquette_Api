@@ -174,21 +174,21 @@ describe("Anetiquette TDD test", ()=>{
         })
     })
    
-    // it('should bid for an auction item', (done)=>{
-    //     request(baseurl2)
-    //     .post('/product/single/639d9c2bb4cdda29cf3ccf76/bid')
-    //     .send(productbid)
-    //     .set('Accept', 'application/json')
-    //     .set('Content-Type', 'application/json')
-    //     .set('Authorization', 'Bearer ' + token)
-    //     .end(function(err, res){
-    //         expect(res.statusCode).to.be.equal(200)
-    //         if(err){
-    //             throw err
-    //         }
-    //         done()
-    //     })
-    // })
+    it('should bid for an auction item', (done)=>{
+        request(baseurl2)
+        .post('/product/single/639fdd282cfdb7a70a5fa5e9/bid')
+        .send(productbid)
+        .set('Accept', 'application/json')
+        .set('Content-Type', 'application/json')
+        .set('Authorization', 'Bearer ' + token)
+        .end(function(err, res){
+            expect(res.statusCode).to.be.equal(200)
+            if(err){
+                throw err
+            }
+            done()
+        })
+    })
 
     it('should be able to add product to cart', (done)=>{
         request(baseurl2)
