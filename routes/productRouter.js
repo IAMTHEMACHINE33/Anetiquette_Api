@@ -15,6 +15,7 @@ router.post("/product/add", isAuthenticatedUser, upload.single("product_img"),(r
     const category = req.body.category;
     const type = req.body.type;
     const last_time = req.body.last_time;
+    const user = req.user.id;
     // const last_time = new Date(2022, 12, 15, 17, 30, 0);
     //asdasd
     console.log(product_name);
@@ -27,6 +28,7 @@ router.post("/product/add", isAuthenticatedUser, upload.single("product_img"),(r
         category: category,
         type: type,
         last_time: last_time,
+        user:user,
     })
     data.save()
     .then(()=>{ 
@@ -39,7 +41,7 @@ router.post("/product/add", isAuthenticatedUser, upload.single("product_img"),(r
 })
 
 router.get("/product/show",(req,res)=>{
-    Product.find().populate('category').populate('bought_by')
+    Product.find().populate('category').populate('bought_by').populate('user')
     .then((data)=>{
         res.status(203)
         .json({success:true,data:data})
@@ -91,6 +93,18 @@ router.get("/product/purchase_history",isAuthenticatedUser,(req,res)=>{
     })
     .catch((e)=>{
         res.json({success:false,error:e})
+    })
+})
+
+router.get("/product/sell_display",isAuthenticatedUser,(req,res)=>{
+    const _id = req.user.id;
+    let no;
+    Product.find({user:_id,bought_by:no})
+    .then((data)=>{
+        res.json({success:true,data:data})
+    })
+    .catch((e)=>{
+        re.json({success:false,error:e})
     })
 })
 
