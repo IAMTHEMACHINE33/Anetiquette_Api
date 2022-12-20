@@ -87,7 +87,7 @@ router.put("/cart/remove",isAuthenticatedUser,(req,res)=>{
     Cart.findOneAndUpdate({user_name:user_name},{
          $pull: { products: {
             added_product:remove_product
-         } } 
+         } }//asdasdsa 
     })
     .then(()=>{
         res.json({success:true,msg:"removed"})
