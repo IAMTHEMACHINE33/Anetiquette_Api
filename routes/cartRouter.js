@@ -84,14 +84,13 @@ router.get("/cart/show",isAuthenticatedUser,(req,res)=>{
 router.put("/cart/remove",isAuthenticatedUser,(req,res)=>{
     const user_name = req.user.id;
     const remove_product= req.body.remove_product
-    Cart.findOneAndUpdate({user_name:user_name},
-        { $unset: { products: [{
+    Cart.findOneAndUpdate({user_name:user_name},{
+         $pull: { products: {
             added_product:remove_product
-        }]}})
+         } } 
+    })
     .then(()=>{
-        res
-        .json({succes:true,message:"removed"})
-        .status(200)
+        res.json({success:true,msg:"removed"})
     })
     .catch((e)=>{
         res.json({success:false,error:e})
