@@ -1,6 +1,7 @@
 const express = require("express");
 const router = new express.Router();
 const Product = require("../models/productModel");
+const Cart = require("../models/cartModel");
 const multer = require("multer");
 const upload = require("../fileupload/fileupload");
 const { isAuthenticatedUser, authorizeRoles } = require("../middleware/auth");
@@ -38,7 +39,7 @@ router.post("/product/add", isAuthenticatedUser, upload.single("product_img"),(r
 })
 
 router.get("/product/show",(req,res)=>{
-    Product.find().populate('category','bought_by')
+    Product.find().populate('category').populate('bought_by')
     .then((data)=>{
         res.status(203)
         .json({success:true,data:data})
@@ -137,6 +138,7 @@ router.post("/product/single/:product_id/bid",isAuthenticatedUser,async (req,res
     // setTimeout(function() {
     //     console.log(diff);
     // }, diff);
+    //asd
     console.log("before")
     console.log(last_time.toString()+" last")
     console.log(now_time.toString()+" now")
@@ -144,12 +146,22 @@ router.post("/product/single/:product_id/bid",isAuthenticatedUser,async (req,res
         console.log("after")
         console.log(last_time.getTime())
         console.log(now_time.getTime())
-        Product.findOneAndUpdate({_id:req.params.product_id},{
-            price: old_price,
-            bought_by: owner
-        })
+        Cart.findOneAndUpdate({user_name:owner},
+            {
+                $addToSet:{
+                    products:[
+                    {
+                        added_product:added_product
+                    }
+                ]}
+            })
+        // Product.findOneAndUpdate({_id:req.params.product_id},{
+        //     price: old_price,
+        //     bought_by: owner
+        // })
         .then(()=>{
             res.json({success:true, msg:"Bidding Over"})
+                .status(200)
         })
         .catch((e)=>{
             res.json({success:false, error:e})
@@ -164,6 +176,7 @@ router.post("/product/single/:product_id/bid",isAuthenticatedUser,async (req,res
                 }})
             .then((data)=>{
                 res.json({success:true,msg:"added"})
+                    .status(200)
                     
             })
             .catch((e)=>{
