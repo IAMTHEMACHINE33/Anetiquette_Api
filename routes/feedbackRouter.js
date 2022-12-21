@@ -13,6 +13,7 @@ router.post("/feedback/add",isAuthenticatedUser,(req,res)=>{
     data.save()
     .then(()=>{
         res.json({success:true,msg:"feedback added"})
+            .status(200)
     })
     .catch((e)=>{
         res.json({success:false,error:e})
@@ -23,6 +24,7 @@ router.get("/feedback/show",isAuthenticatedUser,(req,res)=>{
     Feedback.find().populate("user_name")
     .then((data)=>{
         res.json({success:true,data:data})
+            .status(200)
     })
     .catch((e)=>{
         res.json({success:false,error:e})

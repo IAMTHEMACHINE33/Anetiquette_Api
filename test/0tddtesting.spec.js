@@ -8,6 +8,7 @@ const categoryadd = require('../testdata/categoryadd.json')
 const productsearch = require('../testdata/productsearch.json')
 const productbid = require('../testdata/productbid.json')
 const cartadd = require('../testdata/cartadd.json')
+const feedbackadd = require('../testdata/feedbackadd.json')
 
 describe("Anetiquette TDD test", ()=>{
     const baseurl = "http://localhost:4000/api/v1"
@@ -237,5 +238,36 @@ describe("Anetiquette TDD test", ()=>{
         })
     })
     
+    it('should add feedback from the user', (done)=>{
+        request(baseurl2)
+        .post("/feedback/add")
+        .send(feedbackadd)
+        .set('Accept', 'application/json')
+        .set('Content-Type', 'application/json')
+        .set('Authorization', 'Bearer ' + token)
+        .end(function(err, res){
+            expect(res.statusCode).to.be.equal(200)
+            if(err){
+                throw err
+            }
+            done()
+        })  
+    })
+
+    it('should show all feedbacks sent by users', (done)=>{
+        request(baseurl2)
+        .get("/feedback/show")
+        .set('Accept', 'application/json')
+        .set('Content-Type', 'application/json')
+        .set('Authorization', 'Bearer ' + token)
+        .end(function(err, res){
+            expect(res.statusCode).to.be.equal(200)
+            if(err){
+                throw err
+            }
+            done()
+        })  
+    })
+        
     
 })
