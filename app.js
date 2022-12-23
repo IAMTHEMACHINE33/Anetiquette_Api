@@ -26,6 +26,9 @@ app.use(cartRouter);
 const feedbackRouter = require("./routes/feedbackRouter");
 app.use(feedbackRouter);
 
+const orderRouter = require("./routes/orderRouter");
+app.use(orderRouter);
+
 const user = require("./routes/userRoute")
 app.use("/api/v1", user)
 
