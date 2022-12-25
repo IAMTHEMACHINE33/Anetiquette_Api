@@ -9,6 +9,7 @@ const productsearch = require('../testdata/productsearch.json')
 const productbid = require('../testdata/productbid.json')
 const cartadd = require('../testdata/cartadd.json')
 const feedbackadd = require('../testdata/feedbackadd.json')
+const orderadd = require('../testdata/orderadd.json')
 
 describe("Anetiquette TDD test", ()=>{
     const baseurl = "http://localhost:4000/api/v1"
@@ -237,6 +238,22 @@ describe("Anetiquette TDD test", ()=>{
             done()
         })
     })
+
+    it('should be able to add removed product again to cart', (done)=>{
+        request(baseurl2)
+        .post('/cart/add')
+        .send(cartadd)
+        .set('Accept', 'application/json')
+        .set('Content-Type', 'application/json')
+        .set('Authorization', 'Bearer ' + token)
+        .end(function(err, res){
+            expect(res.statusCode).to.be.equal(200)
+            if(err){
+                throw err
+            }
+            done()
+        })
+    })
     
     it('should add feedback from the user', (done)=>{
         request(baseurl2)
@@ -269,5 +286,33 @@ describe("Anetiquette TDD test", ()=>{
         })  
     })
         
-    
+    // it('should add order of the user', (done)=>{
+    //     request(baseurl2)
+    //     .post("/order/add")
+    //     .send(orderadd)
+    //     .set('Content-Type', 'application/json')
+    //     .set('Authorization', 'Bearer ' + token)
+    //     .end(function(err, res){
+    //         expect(res.statusCode).to.be.equal(200)
+    //         if(err){
+    //             throw err
+    //         }
+    //         done()
+    //     })
+    // })
+
+    it('should show orders of the user', (done)=>{
+        request(baseurl2)
+        .get("/order/show")
+        .set('Accept', 'application/json')
+        .set('Content-Type', 'application/json')
+        .set('Authorization', 'Bearer ' + token)
+        .end(function(err, res){
+            expect(res.statusCode).to.be.equal(200)
+            if(err){
+                throw err
+            }
+            done()
+        })  
+    })
 })

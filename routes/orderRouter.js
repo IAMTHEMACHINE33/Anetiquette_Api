@@ -45,10 +45,14 @@ router.post("/order/add",isAuthenticatedUser,async (req,res)=>{
     }
     Cart.findOneAndRemove({user_name:user})
     .then(()=>{
-        res.json({success:true,msg:"done"})
+        res
+        .json({success:true,msg:"done"})
+        .status(200)
     })
     .catch((e)=>{
-        res.json({success:false,error:e})
+        res
+        .json({success:false,error:e})
+        .status(500)
     })
     
 })
@@ -57,7 +61,9 @@ router.get("/order/show",isAuthenticatedUser,(req,res)=>{
     const user=req.user.id;
     Order.find({user:user}).populate('cart')
     .then((data)=>{
-        res.json({success:true,data:data})
+        res
+        .json({success:true,data:data})
+        .status(200)
     })
     .catch((e)=>{
         res.json({success:false,error:e})
