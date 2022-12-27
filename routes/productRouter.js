@@ -6,32 +6,42 @@ const multer = require("multer");
 const upload = require("../fileupload/fileupload");
 const { isAuthenticatedUser, authorizeRoles } = require("../middleware/auth");
 
-router.post("/product/add", isAuthenticatedUser, upload.single("product_img"),(req,res)=>{
+router.post("/product/add", isAuthenticatedUser, upload.array("product_img",5),(req,res)=>{
 
     const product_name = req.body.product_name;
     const price = req.body.price;
     const description = req.body.description;
-    const image = req.file.filename;
+    // const name = req.files.filename;
     const category = req.body.category;
     const type = req.body.type;
     const last_time = req.body.last_time;
     const user = req.user.id;
     // const last_time = new Date(2022, 12, 15, 17, 30, 0);
     //asdasd
-    console.log(product_name);
-
+    console.log(req.files[0])
+    // console.log(req.files[1].filename)
     const data = new Product({
         product_name: product_name,
         price: price,
         description: description,
-        image: image,
         category: category,
         type: type,
         last_time: last_time,
         user:user,
     })
     data.save()
-    .then(()=>{ 
+    .then((data)=>{ 
+        for(let i =0;i<req.files.length;i++){
+            console.log(i)
+            Product.findOneAndUpdate({_id:data._id},
+                {
+                    $addToSet:{images:[{
+                        name:req.files[i].filename
+                    }]}
+                })
+                .then()
+                .catch()
+        }
         res
         .json({msg:"Product Added"})
     }).catch((e)=>{

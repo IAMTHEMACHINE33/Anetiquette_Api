@@ -33,9 +33,11 @@ const product = new mongoose.Schema({
     description:{
         type: String,
     },
-    image:{
-        type: String,
-    },
+    images:[{
+        name:{
+            type:String
+        }
+    }],
     category:{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Category"
