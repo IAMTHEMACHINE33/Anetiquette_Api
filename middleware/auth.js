@@ -2,6 +2,7 @@ const ErrorHandler = require("../utils/errorhandler")
 const catchAsyncErrors = require("./catchAsyncErrors")
 const jwt = require("jsonwebtoken")
 const User = require("../models/userModel")
+const Admin = require("../models/adminModel")
 
 exports.isAuthenticatedUser = catchAsyncErrors( async(req, res, next)=>{
     // const { token } = req.cookies
@@ -17,6 +18,32 @@ exports.isAuthenticatedUser = catchAsyncErrors( async(req, res, next)=>{
     User.findOne({_id:decodedData.id})
     .then((udata)=>{
         req.user = udata;
+        // console.log(udata);
+        next();
+    })
+    .catch((e)=>{
+        req.json({message: "invalid token"})
+    })
+    // req.user = await User.findById(decodedData._id)
+
+    // next()
+
+})
+
+exports.isAuthenticatedAdmin = catchAsyncErrors( async(req, res, next)=>{
+    // const { token } = req.cookies
+    const token = req.headers.authorization.split(" ")[1];
+    // console.log(a)
+
+    if(!token){
+        return next(new ErrorHandler("Please login to access this resoruce", 401))
+    }
+
+    const decodedData = jwt.verify(token, process.env.JWT_SECRET)
+
+    Admin.findOne({_id:decodedData.id})
+    .then((udata)=>{
+        req.admin = udata;
         // console.log(udata);
         next();
     })
