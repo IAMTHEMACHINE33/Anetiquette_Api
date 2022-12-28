@@ -3,7 +3,7 @@ const { registerUser, loginUser, logout } = require("../controllers/userControll
 const multer = require("multer")
 const router = express.Router();
 const User = require("../models/userModel");
-const upload = multer();
+const upload = require("../fileupload/fileupload");
 const bcrypt = require("bcryptjs");
 const auth = require("../middleware/auth");
 const { default: isEmail } = require("validator/lib/isemail");
@@ -22,6 +22,21 @@ router.get("/show",auth.isAuthenticatedUser,(req,res)=>{
     }).catch((e)=>{
         res.json({error:e})
     })
+})
+
+router.put("/update_pic",auth.isAuthenticatedUser,upload.single("user_img"),(req,res)=>{
+    const user_img = req.file.filename;
+    const user = req.user.id;
+    User.findOneAndUpdate({_id:user},
+        {
+            image:user_img
+        })
+        .then(()=>{
+            res.json({success:true,msg:"Picture added"})
+        })
+        .catch((e)=>{
+            res.json({success:false,error:e})
+        })
 })
 
 router.put("/update",auth.isAuthenticatedUser,(req,res)=>{

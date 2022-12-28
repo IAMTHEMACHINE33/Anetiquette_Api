@@ -22,6 +22,9 @@ const userSchema = new mongoose.Schema({
         minLength: [4, "Password too short"],
         select: false,
     },
+    image:{
+        type:String,
+    },
     avatar:{
         public_id:{
             type: String
