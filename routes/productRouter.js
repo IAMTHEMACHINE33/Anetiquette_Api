@@ -78,6 +78,7 @@ router.get("/product/single/:product_id",isAuthenticatedUser,(req,res)=>{
     })
 })
 
+
 router.put("/product/single/:product_id/bought",isAuthenticatedUser,(req, res)=>{
     const bought_by = req.user.id
     console.log(req.params.product_id)

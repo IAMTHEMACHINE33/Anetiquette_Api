@@ -49,4 +49,34 @@ router.get("/dash",isAuthenticatedAdmin,async(req,res)=>{
     res.json({data:data,product:product,user:user,admin:admin})
 
 })
+
+router.get("/customers",isAuthenticatedAdmin,(req,res)=>{
+    User.find()
+    .then((data)=>{
+        res.json({success:true,data:data})
+    })
+    .catch((e)=>{
+        res.json({success:false,error:e})
+    })
+})
+
+router.get("/products",isAuthenticatedAdmin,(req,res)=>{
+    Product.find().populate("category")
+    .then((data)=>{
+        res.json({success:true,data:data})
+    })
+    .catch((e)=>{
+        res.json({success:false,error:e})
+    })
+})
+
+router.get("/orders",isAuthenticatedAdmin,(req,res)=>{
+    Order.find()
+    .then((data)=>{
+        res.json({success:true,data:data})
+    })
+    .catch((e)=>{
+        res.json({success:false,error:e})
+    })
+})
 module.exports = router;
