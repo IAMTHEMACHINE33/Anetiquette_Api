@@ -46,8 +46,9 @@ router.post("/order/add",isAuthenticatedUser,async (req,res)=>{
     Cart.findOneAndRemove({user_name:user})
     .then(()=>{
         res
-        .json({success:true,msg:"done"})
         .status(200)
+        .json({success:true,msg:"done"})
+        
     })
     .catch((e)=>{
         res
@@ -72,4 +73,4 @@ router.get("/order/show",isAuthenticatedUser,(req,res)=>{
 
 
 
-module.exports =router;
+module.exports = router;

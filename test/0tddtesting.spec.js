@@ -10,6 +10,8 @@ const productbid = require('../testdata/productbid.json')
 const cartadd = require('../testdata/cartadd.json')
 const feedbackadd = require('../testdata/feedbackadd.json')
 const orderadd = require('../testdata/orderadd.json')
+const registeradmin = require('../testdata/registeradmin.json')
+const loginadmin = require('../testdata/loginadmin.json')
 
 describe("Anetiquette TDD test", ()=>{
     const baseurl = "http://localhost:4000/api/v1"
@@ -51,6 +53,8 @@ describe("Anetiquette TDD test", ()=>{
                 done()
             })
     })
+
+
     it('should fetch the user of the provided user id', (done)=>{
         request(baseurl)
             .get('/show')
@@ -314,5 +318,40 @@ describe("Anetiquette TDD test", ()=>{
             }
             done()
         })  
+    })
+
+    it('should register an admin account - backend function',(done)=>{
+        request(baseurl)
+            .post('/register_admin')
+            .send(registeradmin)
+            .set('Accept', 'application/json')
+            .set('Content-Type', 'application/json')
+            .end(function(err, res){
+                expect(res.statusCode).to.be.equal(201)
+                
+                adminId = res.body.adminId;
+                if (err){
+                    throw err
+                }
+                done()
+            })
+    })
+
+    it('should log the admin with given credentials in', (done)=>{
+        request(baseurl)
+            .post('/login_admin')
+            .send(loginadmin)
+            .set('Accept', 'application/json')
+            .set('Content-Type', 'application/json')
+            .end(function(err, res){
+                expect(res.statusCode).to.be.equal(200)
+                expect(res.body.token).not.to.be.null;
+                adminId = res.body.adminId;
+                admintoken = res.body.token;
+                if (err){
+                    throw err
+                }
+                done()
+            })
     })
 })
