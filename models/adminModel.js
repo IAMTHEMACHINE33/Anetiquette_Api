@@ -61,4 +61,4 @@
         return await bcrypt.compare(enteredPassword, this.password)
     }
 
-    module.exports = mongoose.model('Admin',adminSchema);
+    module.exports = mongoose.model('Admin', adminSchema);
