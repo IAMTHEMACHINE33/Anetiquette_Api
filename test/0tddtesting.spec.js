@@ -296,8 +296,8 @@ describe("Anetiquette TDD test", ()=>{
     //     .send(orderadd)
     //     .set('Content-Type', 'application/json')
     //     .set('Authorization', 'Bearer ' + token)
-    //     .end(function(err, res){
-    //         expect(res.statusCode).to.be.equal(200)
+    //     .end(function(err){
+    //         expect()
     //         if(err){
     //             throw err
     //         }
