@@ -47,6 +47,7 @@ router.get("/dash",isAuthenticatedAdmin,async(req,res)=>{
         total_order:total_order,
         total_revenue:total_revenue}
     res.json({data:data,product:product,user:user,admin:admin})
+        .status(200)
 
 })
 
@@ -54,6 +55,7 @@ router.get("/customers",isAuthenticatedAdmin,(req,res)=>{
     User.find()
     .then((data)=>{
         res.json({success:true,data:data})
+            .status(200)
     })
     .catch((e)=>{
         res.json({success:false,error:e})
@@ -64,6 +66,7 @@ router.get("/products",isAuthenticatedAdmin,(req,res)=>{
     Product.find().populate("category")
     .then((data)=>{
         res.json({success:true,data:data})
+            .status(200)
     })
     .catch((e)=>{
         res.json({success:false,error:e})
@@ -74,6 +77,7 @@ router.get("/orders",isAuthenticatedAdmin,(req,res)=>{
     Order.find()
     .then((data)=>{
         res.json({success:true,data:data})
+            .status(200)
     })
     .catch((e)=>{
         res.json({success:false,error:e})

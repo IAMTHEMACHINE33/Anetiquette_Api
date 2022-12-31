@@ -136,7 +136,7 @@ describe("Anetiquette TDD test", ()=>{
 
     it('should fetch single product', (done)=>{
         request(baseurl2)
-            .get('/product/single/6390429631d1bd6027a26b06')
+            .get('/product/single/63b032b2a25cae5fcfaf66e3')
             .set('Accept', 'application/json')
             .set('Content-Type', 'application/json')
             .set('Authorization', 'Bearer ' + token)
@@ -182,7 +182,7 @@ describe("Anetiquette TDD test", ()=>{
    
     it('should bid for an auction item', (done)=>{
         request(baseurl2)
-        .post('/product/single/63a04b2ccda0151ffe58c10c/bid')
+        .post('/product/single/63b033f0a25cae5fcfaf66ed/bid')
         .send(productbid)
         .set('Accept', 'application/json')
         .set('Content-Type', 'application/json')
@@ -348,6 +348,66 @@ describe("Anetiquette TDD test", ()=>{
                 expect(res.body.token).not.to.be.null;
                 adminId = res.body.adminId;
                 admintoken = res.body.token;
+                if (err){
+                    throw err
+                }
+                done()
+            })
+    })
+
+    it('should get all dashboard information for the admin', (done)=>{
+        request(baseurl)
+            .get('/dash')
+            .set('Accept', 'application/json')
+            .set('Content-Type', 'application/json')
+            .set('Authorization', 'Bearer ' + admintoken)
+            .end(function(err, res){
+                expect(res.statusCode).to.be.equal(200)
+                if (err){
+                    throw err
+                }
+                done()
+            })
+    })
+
+    it('should get all users for the admin', (done)=>{
+        request(baseurl)
+            .get('/customers')
+            .set('Accept', 'application/json')
+            .set('Content-Type', 'application/json')
+            .set('Authorization', 'Bearer ' + admintoken)
+            .end(function(err, res){
+                expect(res.statusCode).to.be.equal(200)
+                if (err){
+                    throw err
+                }
+                done()
+            })
+    })
+
+    it('should get all products for the admin', (done)=>{
+        request(baseurl)
+            .get('/products')
+            .set('Accept', 'application/json')
+            .set('Content-Type', 'application/json')
+            .set('Authorization', 'Bearer ' + admintoken)
+            .end(function(err, res){
+                expect(res.statusCode).to.be.equal(200)
+                if (err){
+                    throw err
+                }
+                done()
+            })
+    })
+
+    it('should get all orders for the admin', (done)=>{
+        request(baseurl)
+            .get('/orders')
+            .set('Accept', 'application/json')
+            .set('Content-Type', 'application/json')
+            .set('Authorization', 'Bearer ' + admintoken)
+            .end(function(err, res){
+                expect(res.statusCode).to.be.equal(200)
                 if (err){
                     throw err
                 }
