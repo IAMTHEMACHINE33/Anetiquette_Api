@@ -83,4 +83,39 @@ router.get("/orders",isAuthenticatedAdmin,(req,res)=>{
         res.json({success:false,error:e})
     })
 })
+
+router.put("/products/delete",isAuthenticatedAdmin,(req,res)=>{
+    const remove_product=req.body.remove_product;
+    Product.findOneAndDelete({_id:remove_product})
+    .then(()=>{
+        res.json({success:true,msg:"Product removed"})
+    })
+    .catch((e)=>{
+        res.json({success:false,error:e})
+    })
+})
+
+router.put("/customers/delete",isAuthenticatedAdmin,(req,res)=>{
+    const remove_customer=req.body.remove_customer;
+    User.findOneAndDelete({_id:remove_customer})
+    .then(()=>{
+        res.json({success:true,msg:"Customer removed"})
+    })
+    .catch((e)=>{
+        res.json({success:false,error:e})
+    })
+})
+
+router.put("/orders/delete",isAuthenticatedAdmin,(req,res)=>{
+    const remove_order=req.body.remove_order;
+    User.findOneAndDelete({_id:remove_order})
+    .then(()=>{
+        res.json({success:true,msg:"Order removed"})
+    })
+    .catch((e)=>{
+        res.json({success:false,error:e})
+    })
+})
+
+
 module.exports = router;
