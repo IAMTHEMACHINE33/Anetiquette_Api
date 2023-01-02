@@ -1,7 +1,7 @@
 const ErrorHandler = require("../utils/errorhandler");
 const catchAsyncErrors = require("../middleware/catchAsyncErrors");
 const Admin = require("../models/adminModel");
-const sendToken = require("../utils/jwttoken");
+const sendToken = require("../utils/jwttokenadmin");
 
 exports.registerAdmin = catchAsyncErrors(async(req, res, next)=>{
     const {name, email, password} = req.body;

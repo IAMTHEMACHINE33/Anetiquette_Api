@@ -1,5 +1,5 @@
 const express = require("express");
-const {registerAdmin, loginAdmin, logout, show} = require('../controllers/adminController');
+const {registerAdmin, loginAdmin, show, logout} = require('../controllers/adminController');
 const Admin = require("../models/adminModel");
 const multer = require("multer");
 const { isAuthenticatedAdmin } = require("../middleware/auth");
