@@ -3,10 +3,10 @@ const router = new express.Router();
 const Category = require("../models/categoryModel");
 const multer = require("multer");
 const upload = require("../fileupload/fileupload");
-const { isAuthenticatedUser, authorizeRoles } = require("../middleware/auth");
+const { isAuthenticatedUser, authorizeRoles, isAuthenticatedAdmin } = require("../middleware/auth");
 
 
-router.post("/category/add", upload.single("category_img"),(req,res)=>{
+router.post("/category/add",isAuthenticatedAdmin ,upload.single("category_img"),(req,res)=>{
     const name = req.body.name;
     const image = req.file.filename;
 
