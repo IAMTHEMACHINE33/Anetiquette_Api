@@ -68,6 +68,14 @@ router.get("/cart/show",isAuthenticatedUser,(req,res)=>{
         populate: {
            path: "added_product" 
         }//asdp
+     }).populate({
+        path: "products", 
+        populate: {
+           path: "added_product",
+           populate:{
+            path: "category"
+           }
+        }//asdp
      })
     .then((data)=>{
         res
