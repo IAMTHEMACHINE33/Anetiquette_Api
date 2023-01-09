@@ -7,7 +7,6 @@ router.post("/cart/add",isAuthenticatedUser,async (req,res)=>{
     const user_name = req.user.id;
     const added_product = req.body.added_product;
 
-    
     let c;
     
     try{

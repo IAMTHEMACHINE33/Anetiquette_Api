@@ -51,7 +51,7 @@ router.post("/product/add", isAuthenticatedUser, upload.array("product_img",5),(
 })
 
 router.get("/product/show",(req,res)=>{
-    Product.find().populate('category').populate('bought_by').populate('user')
+    Product.find({bought_by:null}).populate('category').populate('bought_by').populate('user')
     .then((data)=>{
         res.status(203)
         .json({success:true,data:data})
@@ -97,7 +97,7 @@ router.put("/product/single/:product_id/bought",isAuthenticatedUser,(req, res)=>
 router.get("/product/purchase_history",isAuthenticatedUser,(req,res)=>{
     const _id = req.user.id;
 
-    Product.find({bought_by:_id})
+    Product.find({bought_by:_id}).populate("category")
     .then((data)=>{
         res.json({success:true,data:data})
             .status(200)

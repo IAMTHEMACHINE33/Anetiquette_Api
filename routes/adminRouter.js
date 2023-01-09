@@ -108,7 +108,7 @@ router.put("/customers/delete",isAuthenticatedAdmin,(req,res)=>{
 
 router.put("/orders/delete",isAuthenticatedAdmin,(req,res)=>{
     const remove_order=req.body.remove_order;
-    User.findOneAndDelete({_id:remove_order})
+    Order.findOneAndDelete({_id:remove_order})
     .then(()=>{
         res.json({success:true,msg:"Order removed"})
     })
